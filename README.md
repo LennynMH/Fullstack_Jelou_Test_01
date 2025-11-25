@@ -199,31 +199,70 @@ Si tienes dudas sobre los requisitos, no dudes en contactarnos.
 > **Nota**: Completa esta sección con las instrucciones para ejecutar tu proyecto.
 
 ## Prerrequisitos
-[Tus prerrequisitos]
+- **Node.js v18+** y **npm 10+** instalados en tu máquina.
+- **Docker + Docker Compose** (opcional pero recomendado para levantar todo con un solo comando).
+- **MySQL 8** (solo si deseas correr el backend fuera de Docker).
 
 ## Instalación
 ```bash
-# Tus comandos
+# Clonar el repositorio
+git clone <tu-fork>
+cd Fullstack_Test_01
+
+# Instalar dependencias de backend
+cd backend
+npm install
+
+# Instalar dependencias de frontend
+cd ../frontend
+npm install
 ```
 
 ## Configuración
 ```bash
-# Variables de entorno
+# Backend
+cp backend/.env.development backend/.env
+# Actualiza valores como:
+#  - DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+#  - JWT_SECRET
+#  - CORS_ORIGIN
+
+# Frontend
+cp frontend/.env.development frontend/.env
+# Asegúrate de que VITE_API_URL apunte al backend (por defecto http://localhost:3000/api)
 ```
 
 ## Ejecución
 ```bash
-# Backend
-# Frontend
+### Opción 1: Docker Compose (recomendado)
+# Desarrollo (hot reload):
+docker-compose -f docker-compose.development.yml up --build
+
+# Producción (build optimizado + nginx):
+docker-compose -f docker-compose.production.yml up --build -d
+
+### Opción 2: Local sin Docker
+# Terminal 1 - Backend
+cd backend
+npm run dev  # http://localhost:3000
+
+# Terminal 2 - Frontend
+cd frontend
+npm run dev  # http://localhost:3001
 ```
 
 ## Tests
 ```bash
-# Comandos de tests
+cd backend
+npm test
+# Utiliza "npm test -- src/__tests__/users.test.ts" para ejecutar una suite específica
 ```
 
 ## API Documentation
-- Swagger: [Tu URL]
+- Swagger UI disponible en: `http://localhost:3000/api-docs`
 
 ## Credenciales de Prueba
-[Si aplica]
+- **Administrador** (sembrado automáticamente):
+  - Email: `administrador@outlook.com`
+  - Password: `123456`
+- Los usuarios creados mediante registro reciben por defecto el perfil `gestor`.
